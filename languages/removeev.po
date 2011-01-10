@@ -1,0 +1,90 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Remove email verification\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-10 03:43+0100\n"
+"PO-Revision-Date: 2011-01-10 03:43+0100\n"
+"Last-Translator: Barry <barry@mapinated.com>\n"
+"Language-Team: Incsub <barry@incsub.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification\n"
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:35
+msgid "Please install the latest version of <a href=\"http://premium.wpmudev.org/project/update-notifications/\" title=\"Download Now &raquo;\">our free Update Notifications plugin</a> which helps you stay up-to-date with the most stable, secure versions of WPMU DEV themes and plugins. <a href=\"http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-information/\">More information &raquo;</a>"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:67
+msgid "To activate your user, please click the following link"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:67
+msgid "To activate your blog, please click the following link"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:111
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:129
+msgid "Congratulations! Your new blog is ready!"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:115
+#, php-format
+msgid "<p class=\"lead-in\">Your blog at <a href=\"%1$s\">%2$s</a> is active. You may now login to your blog using your chosen username of \"%3$s\".  Please check your email inbox at %4$s for your password and login instructions.  If you do not receive an email, please check your junk or spam folder.  If you still do not receive an email within an hour, you can <a href=\"%5$s\">reset your password</a>.</p>"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:119
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:170
+msgid "An error occurred during the signup"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:132
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:181
+msgid "Username:"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:133
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:182
+msgid "Password:"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:137
+#, php-format
+msgid "You're all set up and ready to go. <a href=\"%1$s\">View your site</a> or <a href=\"%2$s\">Login</a>"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:139
+#, php-format
+msgid "You're all set up and ready to go. <a href=\"%1$s\">Login</a> or go back to the <a href=\"%2$s\">homepage</a>."
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:162
+msgid "Hello, your account has been created!"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:164
+#, php-format
+msgid "<p class=\"lead-in\">Your account has been activated. You may now <a href=\"%1$s\">login</a> to the site using your chosen username of \"%2$s\".  Please check your email inbox at %3$s for your password and login instructions. If you do not receive an email, please check your junk or spam folder. If you still do not receive an email within an hour, you can <a href=\"%4$s\">reset your password</a>.</p>"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:166
+#, php-format
+msgid "<p class=\"lead-in\">Your account at <a href=\"%1$s\">%2$s</a> is active. You may now login to your account using your chosen username of \"%3$s\".  Please check your email inbox at %4$s for your password and login instructions.  If you do not receive an email, please check your junk or spam folder.  If you still do not receive an email within an hour, you can <a href=\"%5$s\">reset your password</a>.</p>"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:178
+#, php-format
+msgid "Hello %s, your account has been created!"
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:185
+#, php-format
+msgid "You can now update your details by <a href=\"%1$s\">Logging in</a> to your account or go back to the <a href=\"%2$s\">homepage</a>."
+msgstr ""
+
+#: /Users/barrygetty/Work/wordpress/plugins/remove-email-verification/remove-email-verification.php:206
+msgid "The new user has been created and an email containing their account details has been sent to them."
+msgstr ""
+
