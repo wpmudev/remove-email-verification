@@ -158,7 +158,10 @@ function activate_on_user_signup($user, $user_email, $key, $meta) {
 	$html = '';
 
 	// Rather than recreate the wheel, just activate the user immediately
-	$result = wpmu_activate_signup($key);
+	if (function_exists('bp_core_activate_signup'))
+	  $result = bp_core_activate_signup($key);
+	else
+	  $result = wpmu_activate_signup($key);
 
 	if ( is_wp_error($result) ) {
 		if ( 'already_active' == $result->get_error_code() || 'blog_taken' == $result->get_error_code() ) {
