@@ -8,6 +8,7 @@ Change Log:
 ----------------------------------------------------------------------
 - Work around BP verification e-mails
 - BP Activate
+- Use upcoming 'bp_core_signup_send_activation_key' filter
 
 2.0 - 01/08/2011
 ----------------------------------------------------------------------
