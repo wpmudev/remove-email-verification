@@ -48,6 +48,8 @@ add_filter( 'wpmu_signup_blog_notification', 'activate_on_blog_signup', 10, 7 );
 remove_action('wpmu_signup_user_notification', 'bp_core_activation_signup_user_notification', 1, 4);
 // Use the brand new BP disable notification filter
 add_filter('bp_core_signup_send_activation_key', 'remove_email_verification_signup_send_activation_key');
+// Lets assume we successfully activated the user account
+add_filter('bp_registration_needs_activation', 'remove_email_verification_registration_needs_activation');
 // User signup - autoactivate
 add_filter( 'wpmu_signup_user_notification', 'activate_on_user_signup', 10, 4 );
 // End activation message display
@@ -221,6 +223,10 @@ function activated_newuser_msg($transtext, $normtext, $domain) {
 
 	return $transtext;
 
+}
+
+function remove_email_verification_registration_needs_activation($inactive) {
+  return false;
 }
 
 function remove_email_verification_signup_send_activation_key($send) {
