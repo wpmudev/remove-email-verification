@@ -40,8 +40,12 @@ if ( !function_exists( 'wdp_un_check' ) ) {
 // Remove existing filters - we need to do this in the whitelist_options filter because there isn't another action between
 // the built in MU one and the saving, besides which we need to add our new_admin_email field to the list anyway.
 add_filter('whitelist_options', 'remove_mu_option_hooks');
+// Remove BP blog activation
+remove_action('wpmu_signup_blog_notification', 'bp_core_activation_signup_blog_notification', 1, 7);
 // Blog signup - autoactivate
 add_filter( 'wpmu_signup_blog_notification', 'activate_on_blog_signup', 10, 7 );
+// Remove BP user activation
+remove_action('wpmu_signup_user_notification', 'bp_core_activation_signup_user_notification', 1, 4);
 // User signup - autoactivate
 add_filter( 'wpmu_signup_user_notification', 'activate_on_user_signup', 10, 4 );
 // End activation message display
