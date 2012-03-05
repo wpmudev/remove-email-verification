@@ -7,10 +7,11 @@ Author: Barry (Incsub)
 Version: 2.1
 Author URI:
 WDP ID: 74
+Network: true
 */
 
 /*
-Copyright 2007-2009 Incsub (http://incsub.com)
+Copyright 2007-2012 Incsub (http://incsub.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
@@ -142,10 +143,17 @@ function activate_on_blog_signup($domain, $path, $title, $user, $user_email, $ke
 		</div>
 
 		<?php if( !empty($url) ) : ?>
-			<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%1$s">View your site</a> or <a href="%2$s">Login</a>', 'removeev'), $url, $url . 'wp-login.php' ); ?></p>
+			<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%1$s">View your site</a>', 'removeev'), $url ); ?></p>
 		<?php else: ?>
-			<p class="view"><?php printf( __( 'You\'re all set up and ready to go. <a href="%1$s">Login</a> or go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_site->domain . $current_site->path . 'wp-login.php', 'http://' . $current_site->domain . $current_site->path ); ?></p>
+			<p class="view"><?php printf( __( 'You\'re all set up and ready to go. Why not go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_site->domain . $current_site->path ); ?></p>
 		<?php endif;
+
+		// automatically login the user so they can see the admin area on the next page load
+		$userbylogin = get_user_by( 'login', $user );
+		if(!empty($userbylogin)) {
+			wp_set_auth_cookie($userbylogin->ID);
+		}
+
 	}
 
 	// Now we need to hijack the sign up message so it isn't displayed
@@ -172,9 +180,9 @@ function activate_on_user_signup($user, $user_email, $key, $meta) {
 		    $signup = $result->get_error_data();
 			$html .= '<h2>' . __('Hello, your account has been created!', 'removeev') . "</h2>\n";
 		    if( $signup->domain . $signup->path == '' ) {
-		    	$html .= sprintf(__('<p class="lead-in">Your account has been activated. You may now <a href="%1$s">login</a> to the site using your chosen username of "%2$s".  Please check your email inbox at %3$s for your password and login instructions. If you do not receive an email, please check your junk or spam folder. If you still do not receive an email within an hour, you can <a href="%4$s">reset your password</a>.</p>', 'removeev'), 'http://' . $current_blog->domain . $current_blog->path . 'wp-login.php', $signup->user_login, $signup->user_email, 'http://' . $current_blog->domain . $current_blog->path . 'wp-login.php?action=lostpassword');
+		    	$html .= sprintf(__('<p class="lead-in">Your account has been activated. Please check your email inbox at %3$s for your password and login instructions. If you do not receive an email, please check your junk or spam folder. If you still do not receive an email within an hour, you can <a href="%4$s">reset your password</a>.</p>', 'removeev'), $signup->user_login, $signup->user_email, 'http://' . $current_blog->domain . $current_blog->path . 'wp-login.php?action=lostpassword');
 			} else {
-		    	$html .= sprintf(__('<p class="lead-in">Your account at <a href="%1$s">%2$s</a> is active. You may now login to your account using your chosen username of "%3$s".  Please check your email inbox at %4$s for your password and login instructions.  If you do not receive an email, please check your junk or spam folder.  If you still do not receive an email within an hour, you can <a href="%5$s">reset your password</a>.</p>', 'removeev'), 'http://' . $signup->domain, $signup->domain, $signup->user_login, $signup->user_email, 'http://' . $current_blog->domain . $current_blog->path . 'wp-login.php?action=lostpassword');
+		    	$html .= sprintf(__('<p class="lead-in">Your account at <a href="%1$s">%2$s</a> is active. Please check your email inbox at %4$s for your password and login instructions.  If you do not receive an email, please check your junk or spam folder.  If you still do not receive an email within an hour, you can <a href="%5$s">reset your password</a>.</p>', 'removeev'), 'http://' . $signup->domain, $signup->domain, $signup->user_login, $signup->user_email, 'http://' . $current_blog->domain . $current_blog->path . 'wp-login.php?action=lostpassword');
 			}
 		} else {
 
@@ -193,13 +201,19 @@ function activate_on_user_signup($user, $user_email, $key, $meta) {
 		$html .= '<p><span class="h3">' . __('Password:', 'removeev') . '</span>' . $password . '</p>';
 		$html .= '</div>';
 
-		$html .= '<p class="view">' . sprintf( __( 'You can now update your details by <a href="%1$s">Logging in</a> to your account or go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_blog->domain . $current_blog->path . 'wp-login.php', 'http://' . $current_blog->domain . $current_blog->path ) . '</p>';
+		$html .= '<p class="view">' . sprintf( __( 'You can now update your details by going to the <a href="%1$s">admin area</a> of your account or go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_blog->domain . $current_blog->path . 'wp-admin', 'http://' . $current_blog->domain . $current_blog->path ) . '</p>';
 
 	}
 
 	// Check if we are passed in an admin area
 	if(!is_admin() || !(isset($_POST['_wp_http_referer']) && strstr($_POST['_wp_http_referer'], 'user-new.php'))) {
 		echo $html;
+	}
+
+	// automatically login the user so they can see the admin area on the next page load
+	$userbylogin = get_user_by( 'login', $user );
+	if(!empty($userbylogin)) {
+		wp_set_auth_cookie($userbylogin->ID);
 	}
 
 	// Now we need to hijack the sign up message so it isn't displayed
