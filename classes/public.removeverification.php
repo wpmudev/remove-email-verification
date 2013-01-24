@@ -106,8 +106,9 @@ class removeemailverification {
 		} else {
 			extract($result);
 
-			$url = get_blogaddress_by_id( (int) $blog_id);
-			$newuser = new WP_User( (int) $user_id);
+			$url = get_blogaddress_by_id( $result['blog_id'] );
+			$newuser = new WP_User( $result['user_id'] );
+
 			?>
 			<h2><?php _e('Congratulations! Your new blog is ready!', 'removeev'); ?></h2>
 
@@ -117,7 +118,7 @@ class removeemailverification {
 			</div>
 
 			<?php if( !empty($url) ) : ?>
-				<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%S">View your site</a> or go to the <a href="%S">admin area</a>.', 'removeev'), $url, trailingslashit($url) . 'wp-admin' ); ?></p>
+				<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%s">View your site</a> or go to the <a href="%s">admin area</a>.', 'removeev'), $url, trailingslashit($url) . 'wp-admin' ); ?></p>
 			<?php else: ?>
 				<p class="view"><?php printf( __( 'You\'re all set up and ready to go. Why not go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_site->domain . $current_site->path ); ?></p>
 			<?php endif;
