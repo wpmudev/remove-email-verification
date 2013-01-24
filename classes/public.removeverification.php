@@ -167,12 +167,12 @@ class removeemailverification {
 		} else {
 			extract($result);
 
-			$user = new WP_User( (int) $user_id);
+			$newuser = new WP_User( (int) $user_id);
 
-			$html = '<h2>' . sprintf(__('Hello %s, your account has been created!', 'removeev'), $user->user_login ) . "</h2>\n";
+			$html = '<h2>' . sprintf(__('Hello %s, your account has been created!', 'removeev'), $newuser->user_login ) . "</h2>\n";
 
 			$html .= '<div id="signup-welcome">';
-			$html .= '<p><span class="h3">' . __('Username:', 'removeev') . '</span>' . $user->user_login . '</p>';
+			$html .= '<p><span class="h3">' . __('Username:', 'removeev') . '</span>' . $newuser->user_login . '</p>';
 			$html .= '<p><span class="h3">' . __('Password:', 'removeev') . '</span>' . $password . '</p>';
 			$html .= '</div>';
 
@@ -187,8 +187,9 @@ class removeemailverification {
 
 		// automatically login the user so they can see the admin area on the next page load
 		$userbylogin = get_user_by( 'login', $user );
-		if(!empty($user)) {
-			wp_set_auth_cookie($user->ID);
+		if(!empty($userbylogin)) {
+			@wp_set_auth_cookie($userbylogin->ID);
+			wp_set_current_user($userbylogin->ID);
 		}
 
 		// Now we need to hijack the sign up message so it isn't displayed

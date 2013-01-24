@@ -31,7 +31,7 @@ if( is_admin() ) {
 	include_once('external/wpmudev-dash-notification.php');
 }
 
-require_once('classes/public.removeverification.php')
+require_once('classes/public.removeverification.php');
 
 $removeemailverification = new removeemailverification();
 
