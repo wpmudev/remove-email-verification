@@ -143,14 +143,16 @@ function activate_on_blog_signup($domain, $path, $title, $user, $user_email, $ke
 		</div>
 
 		<?php if( !empty($url) ) : ?>
-			<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%1$s">View your site</a>', 'removeev'), $url ); ?></p>
+			<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%S">View your site</a> or go to the <a href="%S">admin area</a>.', 'removeev'), $url, trailingslashit('http://' . $current_site->domain . $current_site->path) . 'wp-admin' ); ?></p>
 		<?php else: ?>
 			<p class="view"><?php printf( __( 'You\'re all set up and ready to go. Why not go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_site->domain . $current_site->path ); ?></p>
 		<?php endif;
 
 		// automatically login the user so they can see the admin area on the next page load
 		$userbylogin = get_user_by( 'login', $user );
+		print_r($userbylogin);
 		if(!empty($userbylogin)) {
+
 			wp_set_auth_cookie($userbylogin->ID);
 		}
 
@@ -212,8 +214,10 @@ function activate_on_user_signup($user, $user_email, $key, $meta) {
 
 	// automatically login the user so they can see the admin area on the next page load
 	$userbylogin = get_user_by( 'login', $user );
-	if(!empty($userbylogin)) {
-		wp_set_auth_cookie($userbylogin->ID);
+	//echo $user;
+	print_r($user);
+	if(!empty($user)) {
+		wp_set_auth_cookie($user->ID);
 	}
 
 	// Now we need to hijack the sign up message so it isn't displayed
