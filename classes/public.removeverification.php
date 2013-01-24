@@ -112,12 +112,12 @@ class removeemailverification {
 			<h2><?php _e('Congratulations! Your new blog is ready!', 'removeev'); ?></h2>
 
 			<div id="signup-welcome">
-				<p><span class="h3"><?php _e('Username:', 'removeev'); ?></span> <?php echo $user->user_login ?></p>
+				<p><span class="h3"><?php _e('Username:', 'removeev'); ?></span> <?php echo $newuser->user_login ?></p>
 				<p><span class="h3"><?php _e('Password:', 'removeev'); ?></span> <?php echo $password; ?></p>
 			</div>
 
 			<?php if( !empty($url) ) : ?>
-				<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%S">View your site</a> or go to the <a href="%S">admin area</a>.', 'removeev'), $url, trailingslashit('http://' . $current_site->domain . $current_site->path) . 'wp-admin' ); ?></p>
+				<p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%S">View your site</a> or go to the <a href="%S">admin area</a>.', 'removeev'), $url, trailingslashit($url) . 'wp-admin' ); ?></p>
 			<?php else: ?>
 				<p class="view"><?php printf( __( 'You\'re all set up and ready to go. Why not go back to the <a href="%2$s">homepage</a>.', 'removeev' ), 'http://' . $current_site->domain . $current_site->path ); ?></p>
 			<?php endif;
