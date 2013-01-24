@@ -107,7 +107,7 @@ class removeemailverification {
 			extract($result);
 
 			$url = get_blogaddress_by_id( (int) $blog_id);
-			$user = new WP_User( (int) $user_id);
+			$newuser = new WP_User( (int) $user_id);
 			?>
 			<h2><?php _e('Congratulations! Your new blog is ready!', 'removeev'); ?></h2>
 
@@ -125,8 +125,8 @@ class removeemailverification {
 			// automatically login the user so they can see the admin area on the next page load
 			$userbylogin = get_user_by( 'login', $user );
 			if(!empty($userbylogin)) {
-
-				wp_set_auth_cookie($userbylogin->ID);
+				@wp_set_auth_cookie($userbylogin->ID);
+				wp_set_current_user($userbylogin->ID);
 			}
 
 		}
