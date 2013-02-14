@@ -21,8 +21,6 @@ class removeemailverification {
 		add_filter('bp_registration_needs_activation', array(&$this, 'remove_email_verification_registration_needs_activation'));
 		// User signup - autoactivate
 		add_filter( 'wpmu_signup_user_notification', array(&$this, 'activate_on_user_signup'), 10, 4 );
-		// End activation message display
-		add_action( 'signup_finished', array(&$this, 'activated_signup_finished'), 1 );
 		// Change internal confirmation message - user-new.php
 		add_filter('gettext', array(&$this, 'activated_newuser_msg'), 10, 3);
 		//Remove BP activation emails.
@@ -134,6 +132,8 @@ class removeemailverification {
 
 		// Now we need to hijack the sign up message so it isn't displayed
 		ob_start();
+		// End activation message display
+		add_action( 'signup_finished', array(&$this, 'activated_signup_finished'), 1 );
 
 		return false; // Returns false so that the activation email isn't sent out to the user
 	}
@@ -195,6 +195,8 @@ class removeemailverification {
 
 		// Now we need to hijack the sign up message so it isn't displayed
 		ob_start();
+		// End activation message display
+		add_action( 'signup_finished', array(&$this, 'activated_signup_finished'), 1 );
 
 		return false; // Returns false so that the activation email isn't sent out to the user
 	}
