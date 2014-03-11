@@ -14,34 +14,38 @@ class removeemailverification {
         // the built in MU one and the saving, besides which we need to add our new_admin_email field to the list anyway.
         add_filter('whitelist_options', array(&$this, 'remove_mu_option_hooks'));
 
+        //filters for overriding other functions
+        add_filter('wpmu_signup_blog_notification', '__return_false');
+
+        add_filter('wpmu_welcome_notification', '__return_false');
+
+        add_filter('wpmu_signup_user_notification', '__return_false');
+
         //Remove MS welcome email
         remove_filter('site_option_welcome_user_email', 'welcome_user_msg_filter');
-
-        // Remove BP blog activation
-        remove_action('wpmu_signup_blog_notification', array(&$this, 'bp_core_activation_signup_blog_notification'), 1, 7);
-
-        // Remove BP user activation
-        remove_action('wpmu_signup_user_notification', array(&$this, 'bp_core_activation_signup_user_notification'), 1, 4);
 
         // Blog signup - autoactivate
         add_filter('wpmu_signup_blog_notification', array(&$this, 'activate_on_blog_signup'), 10, 7);
 
         // Use the brand new BP disable notification filter
-        add_filter('bp_core_signup_send_activation_key', array(&$this, 'disable_activation_email'));
+        add_filter('bp_core_signup_send_activation_key', '__return_false');
 
         // Lets assume we successfully activated the user account
-        add_filter('bp_registration_needs_activation', array(&$this, 'remove_bp_activation'));
+        add_filter('bp_registration_needs_activation',  '__return_false');
 
         remove_filter('wpmu_welcome_notification', 'wp_mail');
-        
+
         add_filter('wpmu_welcome_notification', array(&$this, 'remove_bp_activation'));
-        
+
         remove_filter('wpmu_welcome_user_notification', 'wp_mail');
-        
+
         add_filter('wpmu_welcome_user_notification', array(&$this, 'remove_bp_activation'));
 
         // User signup - autoactivate
         add_filter('wpmu_signup_user_notification', array(&$this, 'activate_on_user_signup'), 10, 4);
+
+
+        add_filter('wpmu_signup_user_notification', '__return_false');
 
         // Change internal confirmation message - user-new.php
         add_filter('gettext', array(&$this, 'activated_newuser_msg'), 10, 3);
@@ -50,6 +54,8 @@ class removeemailverification {
         add_filter('wp_mail', array(&$this, 'remove_bp_activation_emails'));
 
         add_action('user_register', array(&$this, 'user_auto_login_after_signup'));
+        
+        add_action('wpmu_new_user', array(&$this, 'user_auto_login_after_signup'));
 
         add_action('bp_init', array(&$this, 'bp_suppress_init'));
     }
@@ -64,8 +70,7 @@ class removeemailverification {
             add_filter('bp_registration_needs_activation', array(&$this, 'fix_signup_form_validation_text'));
             add_filter('bp_core_signup_send_activation_key', array(&$this, 'disable_activation_email'));
         } else {
-            //Remove filters which notifies users
-            remove_filter('wpmu_signup_user_notification', 'bp_core_activation_signup_user_notification', 1, 4);
+            add_filter('wpmu_signup_user_notification', array(&$this, 'activate_on_user_signup'), 10, 4);
         }
     }
 
@@ -75,6 +80,38 @@ class removeemailverification {
 
     function disable_activation_email() {
         return false;
+    }
+
+    function disable_validation($user_id) {
+        global $wpdb;
+
+        $wpdb->query($wpdb->prepare("UPDATE $wpdb->users SET user_status = 0 WHERE ID = %d", $user_id));
+
+        //Add note on Activity Stream
+        if (function_exists('bp_activity_add')) {
+            $userlink = bp_core_get_userlink($user_id);
+
+            bp_activity_add(array(
+                'user_id' => $user_id,
+                'action' => apply_filters('bp_core_activity_registered_member', sprintf(__('%s became a registered member', 'buddypress'), $userlink), $user_id),
+                'component' => 'profile',
+                'type' => 'new_member'
+            ));
+        }
+
+        //Send email to admin
+        //wp_new_user_notification($user_id);
+        // Remove the activation key meta
+        delete_user_meta($user_id, 'activation_key');
+
+        // Delete the total member cache
+        wp_cache_delete('bp_total_member_count', 'bp');
+
+        //Automatically log the user in	.
+        $user_info = get_userdata($user_id);
+        wp_set_auth_cookie($user_id);
+
+        do_action('wp_signon', $user_info->user_login);
     }
 
     function remove_ev_internationalisation() {
@@ -92,7 +129,7 @@ class removeemailverification {
     }
 
     function remove_bp_activation_emails($data) {
-        if (strstr($data['message'], __('To activate your user, please click the following link', 'removeev')) || strstr($data['message'], __('To activate your blog, please click the following link', 'removeev'))) {
+        if (strstr($data['message'], __('To activate your user, please click the following link', 'removeev')) || strstr($data['message'], __('To activate your blog, please click the following link', 'removeev')) || preg_match('/Thanks for registering/', $data['message'])) {
             unset($data);
             $data['message'] = '';
             $data['to'] = '';
@@ -236,10 +273,8 @@ class removeemailverification {
 
         // automatically login the user so they can see the admin area on the next page load
         $userbylogin = get_user_by('login', $user);
+        
         if (!empty($userbylogin)) {
-            //@wp_set_auth_cookie($ucserbylogin->ID);
-            //wp_set_current_user($userbylogin->ID);
-
             wp_set_current_user($ucserbylogin->ID);
             wp_set_auth_cookie($userbylogin->ID, false, is_ssl());
         }
@@ -270,8 +305,11 @@ class removeemailverification {
     function user_auto_login_after_signup($user_id) {
         global $current_blog;
 
+        delete_user_meta( $user_id, 'activation_key' );
+        
         wp_set_current_user($user_id);
         wp_set_auth_cookie($user_id, false, is_ssl());
+        
     }
 
     function output_buffer() {

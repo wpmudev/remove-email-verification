@@ -14,8 +14,10 @@
  */
 
 /*
-  Copyright 2007-2014 Incsub (http://incsub.com)
-
+  Copyright 2014 Incsub (http://incsub.com)
+  
+  Lead Developer - Marko Miljus
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
   the Free Software Foundation.
@@ -32,10 +34,10 @@
 
 if (is_admin()) {
     include_once('external/wpmudev-dash-notification.php');
-} else {
-    require_once('classes/public.removeverification.php');
-    $removeemailverification = new removeemailverification();
 }
+
+require_once('classes/public.removeverification.php');
+$removeemailverification = new removeemailverification();
 
 function ap_action_init() {
     // Localization  
@@ -44,3 +46,13 @@ function ap_action_init() {
 
 // Add actions  
 add_action('init', 'ap_action_init');
+
+//replaced pluggable function
+if (!function_exists('wp_new_user_notification')) :
+
+    function wp_new_user_notification($user_id, $plaintext_pass = '') {
+        return;
+    }
+
+
+endif;
