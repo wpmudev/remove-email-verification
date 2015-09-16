@@ -5,7 +5,7 @@
   Plugin URI: http://premium.wpmudev.org/project/remove-email-verification-from-signup
   Description: This plugin automatically activates and log in users and blog signups, effectively disabling the need for the user to respond to a verification e-mail.
   Author: WPMU DEV
-  Version: 2.2
+  Version: 2.3
   Author URI:
   TextDomain: removeev
   Domain Path: /languages/
@@ -33,7 +33,10 @@
  */
 
 if (is_admin()) {
-    include_once('external/wpmudev-dash-notification.php');
+  //load dashboard notice
+  global $wpmudev_notices;
+  $wpmudev_notices[] = array( 'id'=> 74, 'name'=> 'Remove Email Verification', 'screens' => array() );
+  include_once( dirname( __FILE__ ) . '/external/dash-notice/wpmudev-dash-notification.php' );
 }
 
 require_once('classes/public.removeverification.php');
