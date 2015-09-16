@@ -114,16 +114,6 @@ class removeemailverification {
         do_action('wp_signon', $user_info->user_login);
     }
 
-    function remove_ev_internationalisation() {
-        // Load the text-domain
-        echo 'locale:' . get_locale() . ' ' . WPLANG;
-        $locale = apply_filters('removeev_locale', get_locale());
-        $mofile = dirname(__FILE__) . "/languages/removeev-$locale.mo";
-
-        if (file_exists($mofile))
-            load_textdomain('removeev', $mofile);
-    }
-
     function remove_bp_activation() {
         return false;
     }
