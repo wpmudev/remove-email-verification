@@ -1,16 +1,16 @@
 <?php
 
 /*
-  Plugin Name: Remove Email Verification
-  Plugin URI: http://premium.wpmudev.org/project/remove-email-verification-from-signup
-  Description: This plugin automatically activates and log in users and blog signups, effectively disabling the need for the user to respond to a verification e-mail.
-  Author: WPMU DEV
-  Version: 2.3
-  Author URI:
-  TextDomain: removeev
-  Domain Path: /languages/
-  WDP ID: 74
-  Network: true
+Plugin Name: Remove Email Verification
+Plugin URI: http://premium.wpmudev.org/project/remove-email-verification-from-signup
+Description: This plugin automatically activates and log in users and blog signups, effectively disabling the need for the user to respond to a verification e-mail.
+Author: WPMU DEV
+Version: 2.3
+Author URI:
+TextDomain: removeev
+Domain Path: /languages/
+WDP ID: 74
+Network: true
  */
 
 /*
