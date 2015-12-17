@@ -21,8 +21,9 @@ class removeemailverification {
 
         add_filter('wpmu_signup_user_notification', '__return_false');
 
-        //Remove MS welcome email
-        remove_filter('site_option_welcome_user_email', 'welcome_user_msg_filter');
+        if( apply_filters( 'removeev_disable_welcome_email', false ) ){ // Remove MS welcome email disabled by default.
+            remove_filter('site_option_welcome_user_email', 'welcome_user_msg_filter');
+        }
 
         // Blog signup - autoactivate
         add_filter('wpmu_signup_blog_notification', array(&$this, 'activate_on_blog_signup'), 10, 7);
@@ -33,11 +34,7 @@ class removeemailverification {
         // Lets assume we successfully activated the user account
         add_filter('bp_registration_needs_activation',  '__return_false');
 
-        remove_filter('wpmu_welcome_notification', 'wp_mail');
-
         add_filter('wpmu_welcome_notification', array(&$this, 'remove_bp_activation'));
-
-        remove_filter('wpmu_welcome_user_notification', 'wp_mail');
 
         add_filter('wpmu_welcome_user_notification', array(&$this, 'remove_bp_activation'));
 
