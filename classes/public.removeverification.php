@@ -296,7 +296,9 @@ class removeemailverification {
         global $current_blog;
 
         delete_user_meta( $user_id, 'activation_key' );
-        
+
+        if( is_user_logged_in() ) return;
+
         wp_set_current_user($user_id);
         wp_set_auth_cookie($user_id, false, is_ssl());
         
