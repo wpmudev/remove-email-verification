@@ -244,13 +244,21 @@ class removeemailverification {
         } else {
             extract($result);
 
+            if( empty( $user_id ) ){
+                $user_id = $result;
+            }
+
+            if( empty( $password ) ){
+                $password = '********';
+            }
+
             $newuser = new WP_User((int) $user_id);
 
             $html = '<h2>' . sprintf(__('Hello %s, your account has been created!', 'removeev'), $newuser->user_login) . "</h2>\n";
 
             $html .= '<div id="signup-welcome">';
-            $html .= '<p><span class="h3">' . __('Username:', 'removeev') . '</span>' . $newuser->user_login . '</p>';
-            $html .= '<p><span class="h3">' . __('Password:', 'removeev') . '</span>' . $password . '</p>';
+            $html .= '<p><span class="h3">' . __('Username:', 'removeev') . '</span> ' . $newuser->user_login . '</p>';
+            $html .= '<p><span class="h3">' . __('Password:', 'removeev') . '</span> ' . $password . '</p>';
             $html .= '</div>';
 
             $html .= '<p class="view">' . sprintf(__('You can now update your details by going to the <a href="%1$s">admin area</a> of your account or go back to the <a href="%2$s">homepage</a>.', 'removeev'), 'http://' . $current_blog->domain . $current_blog->path . 'wp-admin', 'http://' . $current_blog->domain . $current_blog->path) . '</p>';
