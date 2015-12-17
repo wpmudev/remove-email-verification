@@ -189,9 +189,6 @@ class removeemailverification {
 
             <?php if (!empty($url)) : ?>
                 <p class="view"><?php printf(__('You\'re all set up and ready to go. <a href="%s">View your site</a> or go to the <a href="%s">admin area</a>.', 'removeev'), $url, trailingslashit($url) . 'wp-admin'); ?></p>
-                <?php
-                wp_redirect(trailingslashit(site_url()) . 'pro-site/?bid=' . $result['blog_id']);
-                ?>
             <?php else: ?>
                 <p class="view"><?php printf(__('You\'re all set up and ready to go. Why not go back to the <a href="%2$s">homepage</a>.', 'removeev'), 'http://' . $current_site->domain . $current_site->path); ?></p>
 
