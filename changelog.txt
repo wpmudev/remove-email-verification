@@ -1,0 +1,41 @@
+-Plugin Name: Remove Email Verification
+-Author: WPMU DEV
+
+Change Log:
+----------------------------------------------------------------------
+
+2.4
+----------------------------------------------------------------------
+- Added hook to disable welcome email.
+- Fix Pro Sites redirection after signup.
+- Fix welcome message.
+- Fix automatic login when user created from backend.
+
+2.3
+----------------------------------------------------------------------
+- Update DEV Dashboard version.
+- Fix plugin version number.
+
+2.1.4
+----------------------------------------------------------------------
+- Automatically log in users after registration
+
+2.1.3
+----------------------------------------------------------------------
+- Switched plugin to prevent it running on admin side of site.
+
+2.1.2
+----------------------------------------------------------------------
+- Move action setup to new locations
+- Updated language file
+- Updated Dash notification class
+
+2.1.1
+----------------------------------------------------------------------
+- Removed rogue object cache warning.
+
+2.1
+----------------------------------------------------------------------
+- Removed warnings and depreciated calls
+- Restructured code so that it uses a class based structure
+- Added in new WPMU DASH notification class
