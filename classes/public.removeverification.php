@@ -17,12 +17,12 @@ class removeemailverification {
         //filters for overriding other functions
         add_filter('wpmu_signup_blog_notification', '__return_false');
 
-        add_filter('wpmu_welcome_notification', '__return_false');
-
         add_filter('wpmu_signup_user_notification', '__return_false');
 
         if( apply_filters( 'removeev_disable_welcome_email', false ) ){ // Remove MS welcome email disabled by default.
-            remove_filter('site_option_welcome_user_email', 'welcome_user_msg_filter');
+            add_filter( 'wpmu_welcome_notification', '__return_false' );
+            add_filter( 'wpmu_welcome_user_notification', '__return_false' );
+            remove_filter( 'site_option_welcome_user_email', 'welcome_user_msg_filter' );
         }
 
         // Blog signup - autoactivate
@@ -36,7 +36,7 @@ class removeemailverification {
 
         add_filter('wpmu_welcome_notification', array(&$this, 'remove_bp_activation'));
 
-        add_filter('wpmu_welcome_user_notification', array(&$this, 'remove_bp_activation'));
+
 
         // User signup - autoactivate
         add_filter('wpmu_signup_user_notification', array(&$this, 'activate_on_user_signup'), 10, 4);
