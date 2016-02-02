@@ -34,10 +34,6 @@ class removeemailverification {
         // Lets assume we successfully activated the user account
         add_filter('bp_registration_needs_activation',  '__return_false');
 
-        add_filter('wpmu_welcome_notification', array(&$this, 'remove_bp_activation'));
-
-
-
         // User signup - autoactivate
         add_filter('wpmu_signup_user_notification', array(&$this, 'activate_on_user_signup'), 10, 4);
 
